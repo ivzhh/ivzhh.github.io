@@ -38,24 +38,175 @@
   <p class="date">Nov 17, 2018</p>
 </section>
 
-<section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section><section id="basic-rules" class="slide level2">
-<h2>Basic Rules</h2>
+<section><section id="problem-definition" class="title-slide slide level1"><h1>Problem Definition</h1></section><section id="what-is-optimization" class="slide level2">
+<h2>What is Optimization</h2>
+</section><section id="make-the-program-run-faster" class="slide level2">
+<h2>Make the program run <strong>FASTER</strong></h2>
+</section><section id="von-neumann-architecture" class="slide level2">
+<h2>Von Neumann Architecture</h2>
+<figure>
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Von_Neumann_Architecture.svg/330px-Von_Neumann_Architecture.svg.png" alt="Von Neumann Architecture" /><figcaption>Von Neumann Architecture</figcaption>
+</figure>
+</section><section id="which-are-fast" class="slide level2">
+<h2>Which Are Fast?</h2>
+<div class="fragment">
 <ul>
-<li>Trust Compiler</li>
-<li>Profile Hotspot</li>
+<li>Control Unit</li>
+<li>Arithmetic Unit</li>
 </ul>
-</section><section id="trust-compiler" class="slide level2">
-<h2>Trust Compiler</h2>
+</div>
+<div class="fragment">
+<p>—&gt; <strong>CPU</strong> &lt;—</p>
+</div>
+</section><section id="which-are-slow" class="slide level2">
+<h2>Which Are Slow?</h2>
+<div class="fragment">
 <ul>
+<li>I/O</li>
+<li>Memory</li>
+</ul>
+</div>
+</section><section id="goal" class="slide level2">
+<h2>Goal</h2>
+<div class="fragment">
+<p>Trade-off</p>
+<ul>
+<li>cost of <strong>hardware</strong></li>
+<li>cost of <strong>optimization</strong></li>
+</ul>
+</div>
+</section><section id="traditional-optimization" class="slide level2">
+<h2>Traditional Optimization</h2>
+<div class="fragment">
+<p><a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore’s law</a> -&gt; Optimize CPU</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Register allocation</li>
 <li>SSA</li>
-<li>Years of Experience</li>
+<li>Sea of Nodes</li>
+<li>JIT, AOT</li>
 </ul>
-</section><section id="wrtie-your-code-in-normal-way-not-hardwares-way" class="slide level2">
-<h2>Wrtie Your Code in Normal Way (Not Hardware’s Way)</h2>
+</div>
+</section><section id="suggestions" class="slide level2">
+<h2>Suggestions</h2>
 <ul>
-<li>Common patterns can be easier to be recognized</li>
-<li>Normal way is closer to logic</li>
+<li>Trust compilers</li>
+<li>Use SIMD</li>
 </ul>
+</section><section id="trust-compilers" class="slide level2">
+<h2>Trust Compilers</h2>
+<ul>
+<li>Write code for humans</li>
+<li>Which is also easier for compilers</li>
+<li><strong>Rely on compiler for type checking</strong></li>
+</ul>
+</section><section id="use-simd" class="slide level2">
+<h2>Use SIMD</h2>
+<ul>
+<li>Single Instruction <strong>Multiple</strong> Data</li>
+<li>Write <strong>Intrinsics</strong></li>
+<li>Write code for <strong>auto-vectorization</strong></li>
+</ul>
+</section></section>
+<section><section id="the-free-lunch-is-over" class="title-slide slide level1"><h1><a href="http://www.gotw.ca/publications/concurrency-ddj.htm">The Free Lunch Is Over</a></h1></section><section id="three-new-problems" class="slide level2">
+<h2>Three New Problems</h2>
+<div class="fragment">
+<ul>
+<li>Memory Hierachy</li>
+<li>Heterogeneous Computing</li>
+<li>I/O and Network</li>
+</ul>
+</div>
+</section></section>
+<section><section id="memory-hierarchy" class="title-slide slide level1"><h1>Memory Hierarchy</h1></section><section id="slower-and-slower" class="slide level2">
+<h2>Slower and Slower</h2>
+<ul>
+<li>Register</li>
+<li>L1</li>
+<li>L2</li>
+<li>LLC</li>
+<li>RAM</li>
+<li>SSD</li>
+<li>HDD</li>
+</ul>
+</section><section id="suggestion-on-memory" class="slide level2">
+<h2>Suggestion on Memory</h2>
+<ul>
+<li>Avoid Random Access
+<ul>
+<li>Stack vs Heap</li>
+<li>Array vs Linked-List</li>
+<li>SoA vs AoS</li>
+</ul></li>
+<li>Cache Data</li>
+</ul>
+</section><section id="suggestion-on-heterogeneous-computing-io-and-networking" class="slide level2">
+<h2>Suggestion on Heterogeneous Computing, I/O and Networking</h2>
+<ul>
+<li>Different <strong>clock</strong></li>
+<li>Different Memory</li>
+<li><strong>Different Programming Model</strong></li>
+</ul>
+</section><section id="prepare-for-asynchronized" class="slide level2">
+<h2>Prepare for Asynchronized</h2>
+<ul>
+<li>Async/Await</li>
+<li>Future</li>
+<li>ThreadPool</li>
+<li>Fiber/Coroutine</li>
+<li>Call/CC</li>
+<li>What ever features in your favorite languages!!!</li>
+</ul>
+</section><section id="arrange-tasks-during-io-access-by-design" class="slide level2">
+<h2>Arrange Tasks During I/O Access <strong>By Design</strong></h2>
+<p>Case Study: OpenGL (heterogeneous computing):</p>
+<ul>
+<li>PBO: use DMA and Overlapped I/O</li>
+<li>Context Switch (Task Queue Flushing)</li>
+<li>Preparation on CPU side:
+<ul>
+<li>Memory Clear</li>
+<li>File Loading</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="profiling" class="title-slide slide level1"><h1>Profiling</h1></section><section id="most-important" class="slide level2">
+<h2><strong>MOST IMPORTANT</strong></h2>
+</section><section id="tools" class="slide level2">
+<h2>Tools</h2>
+<ul>
+<li>Concurrency Visualizer (Microsoft)</li>
+<li>Visual Studio Profiler (Microsoft)</li>
+<li>VTune (Intel)</li>
+</ul>
+</section><section id="concurrency-visualizer" class="slide level2">
+<h2>Concurrency Visualizer</h2>
+<ul>
+<li>Sequence of Execution
+<ul>
+<li>Synchronization</li>
+<li>I/O</li>
+<li>Execution</li>
+</ul></li>
+</ul>
+</section><section id="visual-studio-profiler" class="slide level2">
+<h2>Visual Studio Profiler</h2>
+<ul>
+<li>Hotspot</li>
+</ul>
+</section><section id="vtune" class="slide level2">
+<h2>VTune</h2>
+<ul>
+<li>Hotspot</li>
+<li>Memory Pressure</li>
+<li>Instruction Pressure (Instruction Retirement)</li>
+</ul>
+</section></section>
+<section><section id="conclusion" class="title-slide slide level1"><h1>Conclusion</h1></section><section id="use-async-when-coding" class="slide level2">
+<h2>Use Async When Coding</h2>
+</section><section id="use-profiling" class="slide level2">
+<h2>Use Profiling</h2>
 </section></section>
     </div>
   </div>
