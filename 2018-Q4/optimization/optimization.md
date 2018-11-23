@@ -126,9 +126,9 @@ MetaData metaData = Downloader::requestMetaData("image-123.meta");
 char *buffer = (char*)malloc(MAX_GENERATED_SIZE);
 // 20 ms
 memset(buffer, 0, MAX_DECODED_HEADER);
-// 100 ms
+// 40 ms
 metaData.decodeTo(img, buffer);
-// total: 10 + 15 + 20 + 100 = 145 ms
+// total: 10 + 15 + 20 + 40 = 85 ms
 ```
 
 ## Study Case: Async
