@@ -116,6 +116,42 @@ Trade-off
 - Call/CC
 - What ever features in your favorite languages!!!
 
+## Study Case: Serial
+
+```c++
+// 10 ms
+Image img = Downloader::requestImage("image-123.jpg");
+// 15 ms
+MetaData metaData = Downloader::requestMetaData("image-123.meta");
+char *buffer = (char*)malloc(MAX_GENERATED_SIZE);
+// 20 ms
+memset(buffer, 0, MAX_DECODED_HEADER);
+// 100 ms
+metaData.decodeTo(img, buffer);
+// total: 10 + 15 + 20 + 100 = 145 ms
+```
+
+## Study Case: Async
+
+```c++
+Future<Image> img = // 10 ms
+    Downloader::requestImageAsync("image-123.jpg");
+Future<MetaData> metaData = // 15 ms
+    Downloader::requestMetaDataAsync("image-123.meta");
+Future<char *> buffer = 
+    mallocAsync<char *>(MAX_GENERATED_SIZE).then(
+    [](char *buffer) { // 20 ms
+		memsetOnThread<MAX_CORES>(
+            buffer, 0, MAX_DECODED_HEADER).waitForAll(); 
+		return buffer; 
+	});
+// 40 ms
+metaData.Result().decodeTo(img.Result(), buffer.Result());
+// total: max(10, 15, 20) + 40 = 60 ms
+```
+
+
+
 ## Arrange Tasks During I/O Access **By Design**
 
 Case Study: OpenGL (heterogeneous computing):
