@@ -62,7 +62,7 @@ for {
 Kubernetes 的 master 往往 CPU 和 内存占用都不低，一个原因是有很多
 状态检测循环在运行。
 
-当然这些循环也不是无脑循环， reconcile 只基于默写条件踩触发。
+当然这些循环也不是无脑循环， reconcile 只基于特定条件踩触发。
 
 
 
@@ -88,4 +88,4 @@ Kubernetes 的 master 往往 CPU 和 内存占用都不低，一个原因是有�
 
 [^11]: [Under the hood of Operator SDK](https://itnext.io/under-the-hood-of-the-operator-sdk-eebc8fdeebbf)
 
-[^20]: [进阶 K8s 高级玩家必备 | Kubebuilder：让编写 CRD 变得更简单](https://mp.weixin.qq.com/s/Gzpq71nCfSBc1uJw3dR7xA)
+[^20]: [进阶 K8s 高级玩家必备 Kubebuilder：让编写 CRD 变得更简单](https://mp.weixin.qq.com/s/Gzpq71nCfSBc1uJw3dR7xA)
