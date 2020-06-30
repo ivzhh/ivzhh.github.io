@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Read Medium on Firefox over X11"
+comments: true
 ---
 
 I run a Windows and a Ubuntu in Hyper-V on daily basis. 
